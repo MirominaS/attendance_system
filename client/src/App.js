@@ -4,6 +4,7 @@ import Button from './component/Button';
 import Home from './component/Home';
 import Register from './component/Register';
 import Login from './component/Login';
+import { Route, Router, Routes } from 'react-router-dom';
 
 function App() {
 
@@ -13,11 +14,16 @@ function App() {
 
   return (
     <div className="App">
-    {/* <p>hellp</p> */}
-    {/* <Button label="Click Me" onClick={handleClick} /> */}
-    <Home/>
-    {/* <Register/> */}
-    {/* <Login/> */}
+       <Routes>
+          <Route path="/" element={<Login/>}/>
+          <Route path="/home" element={<Home/>}/>
+          <Route path="/register" element={<Register/>}/>
+          
+        </Routes>
+    
+  
+    
+   
     </div>
   );
 }
