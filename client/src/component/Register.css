@@ -41,19 +41,31 @@
     font-size: 1.25rem;
     margin-bottom: 1rem;
   }
-  
-  .reg-form .login-link {
-    margin-top: 1rem;
-    text-align: center;
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
   }
   
-  .reg-form .login-link a {
-    color: #1d4ed8;
-    text-decoration: none;
-    font-weight: 500;
+  .success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
   }
-  
-  .reg-form .login-link a:hover {
-    text-decoration: underline;
+
+  .reg-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
   }
-  
+  .reg-form label {
+    font-size: 16px;
+  }
+  option .select-role{
+    color: #888;
+  }
