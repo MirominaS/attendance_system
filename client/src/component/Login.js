@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Button from './Button';
 import './Login.css'
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { serverConnector } from '../serverConnector/serverConnector';
 import toast from 'react-hot-toast';
 
 const Login = () => {
@@ -27,23 +27,35 @@ const Login = () => {
     const handleLogin = (e) => {
       e.preventDefault();
       if (validateForm()) {
-        const loginPromise = new Promise((resolve,reject) => {axios.post('http://localhost:8080/auth/login', {
-          username,
-          password
-        })
-        .then(function (response) {
-          localStorage.setItem('authToken',response.data)
-          resolve('Login successful!');
-          navigate('/home'); 
-        })
-        .catch(function (error) {
-          reject(error.response.data);
-        });})
-        toast.promise(loginPromise, {
-          loading: 'Logging in...',
-          success: loginPromise.then(res=>{return res}),
-          error: loginPromise.catch(err=>{return err}),
-        })
+        serverConnector({
+          url :'http://localhost:8080/auth/login',
+          payload : {username,password},
+          successMessage : 'Login Successful!',
+        }).then(res => {
+          localStorage.setItem('authToken',res.data)
+          navigate('/home')
+          }
+        ).catch(err =>
+          toast(err)
+        )
+        // let token = localStorage.getItem('authToken')
+        // const loginPromise = new Promise((resolve,reject) => {axios.post('http://localhost:8080/auth/login', {
+        //   username,
+        //   password
+        // })
+        // .then(function (response) {
+        //   localStorage.setItem('authToken',response.data)
+        //   resolve('Login successful!');
+        //   navigate('/home'); 
+        // })
+        // .catch(function (error) {
+        //   reject(error.response.data);
+        // });})
+        // toast.promise(loginPromise, {
+        //   loading: 'Logging in...',
+        //   success: loginPromise.then(res=>{return res}),
+        //   error: loginPromise.catch(err=>{return err}),
+        // })
       }
     };
  
