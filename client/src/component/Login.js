@@ -33,10 +33,11 @@ const Login = () => {
           successMessage : 'Login Successful!',
         }).then(res => {
           localStorage.setItem('authToken',res.data)
+          toast('Login Successful!',{icon: '✅'})
           navigate('/home')
           }
         ).catch(err =>
-          toast(err)
+          toast(err,{icon: '❌'})
         )
         // let token = localStorage.getItem('authToken')
         // const loginPromise = new Promise((resolve,reject) => {axios.post('http://localhost:8080/auth/login', {
