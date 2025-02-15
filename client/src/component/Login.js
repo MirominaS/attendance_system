@@ -30,7 +30,6 @@ const Login = () => {
         serverConnector({
           url :'http://localhost:8080/auth/login',
           payload : {username,password},
-          successMessage : 'Login Successful!',
         }).then(res => {
           localStorage.setItem('authToken',res.data)
           toast('Login Successful!',{icon: '✅'})
