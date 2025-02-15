@@ -28,7 +28,7 @@ const Login = () => {
       e.preventDefault();
       if (validateForm()) {
         serverConnector({
-          url :'http://localhost:8080/auth/login',
+          url :'auth/login',
           payload : {username,password},
         }).then(res => {
           localStorage.setItem('authToken',res.data)
@@ -36,26 +36,8 @@ const Login = () => {
           navigate('/home')
           }
         ).catch(err =>
-          toast(err,{icon: '❌'})
+          toast(err || 'Login Failed!',{icon: '❌'})
         )
-        // let token = localStorage.getItem('authToken')
-        // const loginPromise = new Promise((resolve,reject) => {axios.post('http://localhost:8080/auth/login', {
-        //   username,
-        //   password
-        // })
-        // .then(function (response) {
-        //   localStorage.setItem('authToken',response.data)
-        //   resolve('Login successful!');
-        //   navigate('/home'); 
-        // })
-        // .catch(function (error) {
-        //   reject(error.response.data);
-        // });})
-        // toast.promise(loginPromise, {
-        //   loading: 'Logging in...',
-        //   success: loginPromise.then(res=>{return res}),
-        //   error: loginPromise.catch(err=>{return err}),
-        // })
       }
     };
  
@@ -65,7 +47,6 @@ const Login = () => {
       <form className="login-form" onSubmit={handleLogin}>
         <h2>Login</h2>
         {error && <p className="error-message">{error}</p>}
-        {success && <p className="success-message">{success}</p>}
         <input
           type="text"
           placeholder="Username"
