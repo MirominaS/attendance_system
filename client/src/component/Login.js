@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import Button from './Button';
 import './Login.css'
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error,setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -25,12 +27,26 @@ const Login = () => {
     const handleLogin = (e) => {
       e.preventDefault();
       if (validateForm()) {
-        setSuccess('Login successful! Redirecting...');
-        setTimeout(() => {
+        const loginPromise = new Promise((resolve,reject) => {axios.post('http://localhost:8080/auth/login', {
+          username,
+          password
+        })
+        .then(function (response) {
+          localStorage.setItem('authToken',response.data)
+          resolve('Login successful!');
           navigate('/home'); 
-        }, 500);
+        })
+        .catch(function (error) {
+          reject(error.response.data);
+        });})
+        toast.promise(loginPromise, {
+          loading: 'Logging in...',
+          success: loginPromise.then(res=>{return res}),
+          error: loginPromise.catch(err=>{return err}),
+        })
       }
     };
+ 
 
   return (
     <div className="login-container">
