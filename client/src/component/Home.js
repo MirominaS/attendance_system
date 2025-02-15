@@ -2,19 +2,27 @@ import React,{useState} from 'react'
 import Button from './Button';
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
+import { serverConnector } from '../serverConnector/serverConnector';
+import toast from 'react-hot-toast';
 
 
 const Home = () => {
   const navigate = useNavigate();
   const [success, setSuccess] = useState('');
-
   const handleLogout = (e) =>{
-    e.preventDefault(); 
-    setSuccess('Logout successful! Redirecting to Login...');
-    setTimeout(() => {
-        
-        navigate('/');
-      }, 500);  
+    let token = localStorage.getItem('authToken')
+    serverConnector({
+      url :'auth/logout',
+      payload : {},
+      headers: { 'Authorization' : `Bearer ${token}`}
+    }).then(res => {
+      toast(res.data,{icon: '✅'})
+      localStorage.removeItem('authToken')
+      navigate('/')
+      }
+    ).catch(err =>
+      toast('Logout failed!',{icon: '❌'})
+    ) 
     
   } 
   return (
