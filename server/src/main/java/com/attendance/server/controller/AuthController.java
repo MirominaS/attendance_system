@@ -7,6 +7,7 @@ import com.attendance.server.repository.RoleRepository;
 import com.attendance.server.repository.UserRepository;
 import com.attendance.server.security.JwtUtil;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,15 +60,23 @@ public class AuthController {
 
     //login
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User loginRequest){
-        try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
-        }catch(Exception e){
-            System.out.println("Exception: "+e);
+    public ResponseEntity<String> login(@RequestBody User loginRequest) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid username or password");
         }
+
         String token = jwtUtil.generateToken(loginRequest.getUsername());
         return ResponseEntity.ok(token);
     }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         if (token == null || !token.startsWith("Bearer ")) {
