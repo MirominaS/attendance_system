@@ -36,7 +36,15 @@ npm install
 npm start
 ```
 The frontend will be available at `http://localhost:3000`
+### 4. **Configure Database:**
+spring.datasource.url = jdbc:mysql://localhost:3306/attendance_system
+spring.datasource.username = root
+spring.datasource.password = ####
 
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.show-sql = true
+```
 ## 🧪 Testing Credentials
 - **User:**   `user1` / `password123`
 
