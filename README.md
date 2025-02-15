@@ -5,7 +5,7 @@ This project is a full-stack student attendance system integrating a React front
 📂 Project Structure
 - **Frontend (`client/`):** React with React Router, Axios, and react-hot-toast.
 - **Backend (`server/`):** Spring Boot with JWT security and REST APIs.
-- `.env`: Stores environment variables (e.g., backend URL)
+
 
 ## 🛠️ Prerequisites
 - Node.js (v18 or higher) and npm (v9 or higher)
