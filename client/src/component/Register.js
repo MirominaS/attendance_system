@@ -11,7 +11,6 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
@@ -44,14 +43,14 @@ const Register = () => {
 
     if (validateForm()) {
       serverConnector({
-        url :'http://localhost:8080/auth/register',
+        url :'auth/register',
         payload : {username,password,roles:[role]},
       }).then(res => {
         toast(res.data,{icon: '✅'})
         navigate('/')
         }
       ).catch(err =>
-        toast(err,{icon: '❌'})
+        toast(err || 'Registration Failed!',{icon: '❌'})
       )  
     }
   } 
@@ -59,7 +58,7 @@ const Register = () => {
     <div className="reg-container">
     <form className="reg-form" onSubmit={handleRegister}>
       <h2>Register</h2>
-      {success && <p className="success-message">{success}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <input
         type="text"
         placeholder="Username"
