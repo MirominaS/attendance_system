@@ -2,6 +2,8 @@ import React ,{ useState } from 'react'
 import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import './Register.css'
+import { serverConnector } from '../serverConnector/serverConnector';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -41,13 +43,16 @@ const Register = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      
-      setSuccess('Registration successful! Redirecting to Login...');
-
-      
-      setTimeout(() => {
-        navigate('/');
-      }, 500);  
+      serverConnector({
+        url :'http://localhost:8080/auth/register',
+        payload : {username,password,roles:[role]},
+      }).then(res => {
+        toast(res.data,{icon: '✅'})
+        navigate('/')
+        }
+      ).catch(err =>
+        toast(err,{icon: '❌'})
+      )  
     }
   } 
   return (
