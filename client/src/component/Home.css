@@ -22,5 +22,10 @@
     color: #333;
     margin-bottom: 20px;
   }
-  
+  .success-message {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
   
