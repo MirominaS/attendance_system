@@ -29,9 +29,6 @@ The server will run at `http://localhost:8080`
 ### 3. **Frontend Setup:**
 ```bash
 cd ../client
-cp .env.example .env
-# Update .env with backend URL:
-REACT_APP_API_SERVER_ENDPOINT=http://localhost:8080/api/
 npm install
 npm start
 ```
